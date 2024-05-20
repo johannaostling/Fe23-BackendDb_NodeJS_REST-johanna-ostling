@@ -1,0 +1,22 @@
+<%- include('partials/head') %>
+
+<body>
+
+    <%- include('partials/header') %>
+    
+    <form action="/" method="POST">
+        table name: <input type="text" name="table_name" >
+        <button type="submit">Get Table</button>
+    </form>
+
+    <p> <%= pageTitle; %></p>
+
+
+    <%- include('partials/dataTable') %>
+    
+
+
+
+    <%- include('partials/footer') %>
+</body>
+</html>
