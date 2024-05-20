@@ -11,7 +11,6 @@ const pool = mysql.createPool({
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0,
-//    rowsAsArray: true,
 
   });
   // Export a function to execute SQL queries
