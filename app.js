@@ -124,8 +124,9 @@ app.post('/removeData', async (req, res) => {
 });
 
 
-
-// return Json table data
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////// return Json table data/////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // localhost:3000/students?id=
 
 app.get('/courses', async (req, res) => {
@@ -157,7 +158,7 @@ app.get('/students', async (req, res) => {
 });
 
 app.get('/students/:name', async (req, res) => {
-    let sql = `SELECT ${req.params.name} FROM students WHERE Fname=${req.params.name}` 
+    let sql = `SELECT * FROM students WHERE students.fName="${req.params.name}"` 
     const dbData = await db.query(sql);
     res.json(dbData);
 });
