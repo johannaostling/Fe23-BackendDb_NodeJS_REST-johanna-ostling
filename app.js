@@ -36,31 +36,31 @@ app.get('/', async (req, res) => {
     console.log(dbData);
     res.render('index', {pageTitle, dbData} );
 });
-app.get('/exempel', async (req, res) => {
-    //res.send("hello World");//serves index.html
-    //
-    let cols = ["first","second","one","4","c"]
-    let buildQuery = (cols) => {
-        let colQuery = "";
-        for (let i = 0; i < cols.length; i++) {
-            if(i<cols.length-1){    
-                colQuery+=cols[i]+",";
-            }else{
-                colQuery+=cols[i]
-            }     
-        }
-        let queryStart = "INSERT INTO(" + colQuery + ") WHERE fdsaf";
-        console.log(queryStart);
-    }
-    buildQuery(cols);
+// app.get('/exempel', async (req, res) => {
+//     //res.send("hello World");//serves index.html
+//     //
+//     let cols = ["first","second","one","4","c"]
+//     let buildQuery = (cols) => {
+//         let colQuery = "";
+//         for (let i = 0; i < cols.length; i++) {
+//             if(i<cols.length-1){    
+//                 colQuery+=cols[i]+",";
+//             }else{
+//                 colQuery+=cols[i]
+//             }     
+//         }
+//         let queryStart = "INSERT INTO(" + colQuery + ") WHERE fdsaf";
+//         console.log(queryStart);
+//     }
+//     buildQuery(cols);
 
-    //
-    const pageTitle = "Dynamic webpage";
-    const sql = 'SHOW tables';
-    const dbData = await db.query(sql);
-    console.log(dbData);
-    res.render('index', {pageTitle, dbData} );
-});
+//     //
+//     const pageTitle = "Dynamic webpage";
+//     const sql = 'SHOW tables';
+//     const dbData = await db.query(sql);
+//     console.log(dbData);
+//     res.render('index', {pageTitle, dbData} );
+// });
 
 let currentTable;
 app.post('/', async (req, res) => {
@@ -76,10 +76,27 @@ app.post('/', async (req, res) => {
     res.render('index', {pageTitle, dbData} );
 });
 
-
+app.get('/students', async (req, res) => {
+    const pageTitle = "Dynamic webpage";
+    const sql = `SELECT * FROM students`;
+    const dbData = await db.query(sql);
+    console.log(dbData);
+    res.render('students', {pageTitle, dbData} );
+});
+app.get('/courses', async (req, res) => {
+    const pageTitle = "Dynamic webpage";
+    const sql = `SELECT * FROM courses`;
+    const dbData = await db.query(sql);
+    res.render('courses', {pageTitle, dbData} );
+});
+app.get('/students_courses', async (req, res) => {
+    const pageTitle = "Dynamic webpage";
+    const sql = `SELECT * FROM students_courses`;
+    const dbData = await db.query(sql);
+    res.render('students_courses', {pageTitle, dbData} );
+});
 
 app.get('/removeData', async (req, res) => {
-    //res.send("hello World");//serves index.html
     const pageTitle = "Dynamic webpage";
     const sql = `SELECT * FROM ${currentTable}`;
     const dbData = await db.query(sql);
@@ -106,6 +123,8 @@ app.post('/removeData', async (req, res) => {
     //show webpage to the user
     res.render('removeData', {pageTitle, dbData, dbDataHeaders} );
 });
+
+
 
 // return Json table data
 // localhost:3000/students?id=
@@ -137,6 +156,14 @@ app.get('/students', async (req, res) => {
     console.log(dbData);
     res.json(dbData);
 });
+
+app.get('/students/:name', async (req, res) => {
+    let sql = `SELECT ${req.params.name} FROM students WHERE Fname=${req.params.name}` 
+    const dbData = await db.query(sql);
+    res.json(dbData);
+});
+
+
 app.get('/students_courses', async (req, res) => {
     let sql = "";
     const {id} = req.query;
