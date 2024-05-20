@@ -1,0 +1,8 @@
+body {
+    background-color: rgb(163, 163, 228);
+}
+
+li a{
+    display: block;
+    width: 100px;
+    }

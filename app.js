@@ -29,7 +29,6 @@ app.use(bodyParser.json());
 ////////////////Routing
 
 app.get('/', async (req, res) => {
-    //res.send("hello World");//serves index.html
     const pageTitle = "Dynamic webpage";
     const sql = 'SHOW tables';
     const dbData = await db.query(sql);
