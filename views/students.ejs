@@ -9,7 +9,12 @@
         Row id to be removed: <input type="text" name="id" >
         <button type="submit">Remove row</button>
     </form>
-
+    <form action="/studentsAdd" method="POST">
+        <input type="text" name="fName" placeholder="first name">
+        <input type="text" name="lName" placeholder="last name">
+        <input type="text" name="town" placeholder="town">
+        <button type="submit">Sumbit</button>
+    </form>
     <%- include('partials/dataTable') %>
     
     <%- include('partials/footer') %>
