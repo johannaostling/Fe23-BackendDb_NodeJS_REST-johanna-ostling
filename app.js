@@ -75,19 +75,68 @@ app.post('/', async (req, res) => {
     res.render('index', {pageTitle, dbData} );
 });
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////// Students CRUD///////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get('/students', async (req, res) => {
     const pageTitle = "Dynamic webpage";
     const sql = `SELECT * FROM students`;
     const dbData = await db.query(sql);
     console.log(dbData);
     res.render('students', {pageTitle, dbData} );
+    
 });
+app.post('/students', async (req, res) => {
+    //getting input data from the form
+    console.log(req.body);
+    const requestData = req.body.id;
+    const pageTitle = "Dynamic webpage";
+
+    //execute delete query on a table.row
+    const sqlDeleteQuery = `DELETE FROM students WHERE id=${requestData}`;
+    const deleteQuery = await db.query(sqlDeleteQuery);
+
+    //get table data
+    const sql = `SELECT * FROM students`;
+    const dbData = await db.query(sql);
+
+    //show webpage to the user
+    res.render('students', {pageTitle, dbData} );
+});
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////// courses CRUD///////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get('/courses', async (req, res) => {
     const pageTitle = "Dynamic webpage";
     const sql = `SELECT * FROM courses`;
     const dbData = await db.query(sql);
     res.render('courses', {pageTitle, dbData} );
 });
+app.post('/courses', async (req, res) => {
+    //getting input data from the form
+    console.log(req.body);
+    const requestData = req.body.id;
+    const pageTitle = "Dynamic webpage";
+
+    //execute delete query on a table.row
+    const sqlDeleteQuery = `DELETE FROM courses WHERE id=${requestData}`;
+    const deleteQuery = await db.query(sqlDeleteQuery);
+
+    //get table data
+    const sql = `SELECT * FROM courses`;
+    const dbData = await db.query(sql);
+
+    //show webpage to the user
+    res.render('courses', {pageTitle, dbData} );
+});
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////// students_courses CRUD///////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get('/students_courses', async (req, res) => {
     const pageTitle = "Dynamic webpage";
     const sql = `SELECT * FROM students_courses`;
@@ -95,33 +144,24 @@ app.get('/students_courses', async (req, res) => {
     res.render('students_courses', {pageTitle, dbData} );
 });
 
-app.get('/removeData', async (req, res) => {
-    const pageTitle = "Dynamic webpage";
-    const sql = `SELECT * FROM ${currentTable}`;
-    const dbData = await db.query(sql);
-    console.log(dbData);
-    res.render('removeData', {pageTitle, dbData} );
-});
-app.post('/removeData', async (req, res) => {
-    //res.send("hello World");//serves index.html
+app.post('/students_courses', async (req, res) => {
     //getting input data from the form
     console.log(req.body);
-    const requestData = req.body;
+    const requestData = req.body.id;
     const pageTitle = "Dynamic webpage";
+
     //execute delete query on a table.row
-    const sqlDeleteQuery = `DELETE FROM ${currentTable} WHERE id=${requestData.id}`;
+    const sqlDeleteQuery = `DELETE FROM students_courses WHERE id=${requestData}`;
     const deleteQuery = await db.query(sqlDeleteQuery);
-    console.log(deleteQuery);
+
     //get table data
-    const sql = `SELECT * FROM ${currentTable}`;
+    const sql = `SELECT * FROM students_courses`;
     const dbData = await db.query(sql);
-    //get table headers
-    const sql2 = `DESCRIBE ${currentTable}`;
-    const dbDataHeaders = await db.query(sql2);
-    console.log(dbDataHeaders);
+
     //show webpage to the user
-    res.render('removeData', {pageTitle, dbData, dbDataHeaders} );
+    res.render('students_courses', {pageTitle, dbData} );
 });
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -148,18 +188,12 @@ app.get('/students', async (req, res) => {
     const {id} = req.query;
     console.log(id);
     if(id){
-        sql = `SELECT * FROM students WHERE id = ${id}`;
+        sql = `SELECT * FROM students WHERE id = ${id}` ;
     }else{
         sql = `SELECT * FROM students`;
     }
     const dbData = await db.query(sql);
     console.log(dbData);
-    res.json(dbData);
-});
-
-app.get('/students/:name', async (req, res) => {
-    let sql = `SELECT * FROM students WHERE students.fName="${req.params.name}"` 
-    const dbData = await db.query(sql);
     res.json(dbData);
 });
 
@@ -177,14 +211,52 @@ app.get('/students_courses', async (req, res) => {
     console.log(dbData);
     res.json(dbData);
 });
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////// Endpoints /////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// app.get('/plants/:id/:col', async (req, res) => {
-//     let sql = `SELECT ${req.params.col} FROM plants WHERE id = ${req.params.id}`;
-//     const dbData = await db.query(sql);
-//     res.json(dbData);
-// });
+app.get('/students_courses/:name', async (req, res) => {
+        let sql = `SELECT students.fName, courses.name FROM students_courses INNER JOIN students ON students_courses.student_id = students.id INNER JOIN courses ON students_courses.course_id = courses.id WHERE students.fName="${req.params.name}"`
+        const dbData = await db.query(sql);
+        res.json(dbData);
+    });
+app.get('/students_courses/lName/:lName', async (req, res) => {
+        let sql = `SELECT students.lName, courses.name FROM students_courses INNER JOIN students ON students_courses.student_id = students.id INNER JOIN courses ON students_courses.course_id = courses.id WHERE students.lName="${req.params.lName}"`
+        const dbData = await db.query(sql);
+        res.json(dbData);
+    });
+app.get('/students_courses/id/:id', async (req, res) => {
+        let sql = `SELECT students.id, courses.name FROM students_courses INNER JOIN students ON students_courses.student_id = students.id INNER JOIN courses ON students_courses.course_id = courses.id WHERE students.id=${req.params.id}` 
+        const dbData = await db.query(sql);
+        res.json(dbData);
+    });
+app.get('/students_courses/town/:town', async (req, res) => {
+        let sql = `SELECT students.town, courses.name FROM students_courses INNER JOIN students ON students_courses.student_id = students.id INNER JOIN courses ON students_courses.course_id = courses.id WHERE students.town="${req.params.town}"` 
+        const dbData = await db.query(sql);
+        res.json(dbData);
+    });
+app.get('/students_courses/courseId/:courseIdid', async (req, res) => {
+        let sql = `SELECT students_courses.course_id, students.fName FROM students_courses INNER JOIN students ON students_courses.student_id = students.id WHERE students_courses.course_id=${req.params.courseIdid}` 
+        const dbData = await db.query(sql);
+        res.json(dbData);
+    });
 
+app.get('/students_courses/courseName/:courseName', async (req, res) => {
+        let sql = `SELECT  courses.name, students.fName, students.lName FROM students_courses INNER JOIN students ON students_courses.student_id = students.id INNER JOIN courses ON students_courses.course_id = courses.id WHERE courses.name="${req.params.courseName}"`
+        const dbData = await db.query(sql);
+        res.json(dbData);
+    });
 
+app.get('/students_courses/courseWord/:courseWord', async (req, res) => {
+        let sql = `SELECT  courses.name, students.lName FROM students_courses INNER JOIN students ON students_courses.student_id = students.id INNER JOIN courses ON students_courses.course_id = courses.id WHERE courses.name LIKE "%${req.params.courseWord}%"`
+        const dbData = await db.query(sql);
+        res.json(dbData);
+    });
+app.get('/students_courses/courseDescription/:courseDescriptionWord', async (req, res) => {
+        let sql = `SELECT  students.fName, courses.name, courses.desciption FROM students_courses INNER JOIN students ON students_courses.student_id = students.id INNER JOIN courses ON students_courses.course_id = courses.id WHERE courses.desciption LIKE "%${req.params.courseDescriptionWord}%"`
+        const dbData = await db.query(sql);
+        res.json(dbData);
+    });
 
 //server configuration
 const port = 3000;

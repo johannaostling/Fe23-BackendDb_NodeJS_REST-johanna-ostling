@@ -6,7 +6,8 @@
     <p> <%= pageTitle; %></p>
 
     <form action="/students_courses" method="POST"></form>
-
+    Row id to be removed: <input type="text" name="id" >
+    <button type="submit">Remove row</button>
     <%- include('partials/dataTable') %>
     
     <%- include('partials/footer') %>
