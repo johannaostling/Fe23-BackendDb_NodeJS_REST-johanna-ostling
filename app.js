@@ -239,7 +239,7 @@ app.post('/students_coursesUpdate', async (req, res) => {
     res.render('students_courses', {pageTitle, dbData} );
 });
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////// return Json table data/////////////////////////////////////////////
+/////////////////////////////////////// return Json table data / Endpoints/////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -285,17 +285,10 @@ app.get('/students_courses/list', async (req, res) => {
     console.log(dbData);
     res.json(dbData);
 });
-///////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////// Endpoints /////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-app.get('/students_courses/:name', async (req, res) => {
-        let sql = `SELECT students.fName, courses.name FROM students_courses INNER JOIN students ON students_courses.student_id = students.id INNER JOIN courses ON students_courses.course_id = courses.id WHERE students.fName="${req.params.name}"`
-        const dbData = await db.query(sql);
-        res.json(dbData);
-    });
-app.get('/students_courses/lName/:lName', async (req, res) => {
-        let sql = `SELECT students.lName, courses.name FROM students_courses INNER JOIN students ON students_courses.student_id = students.id INNER JOIN courses ON students_courses.course_id = courses.id WHERE students.lName="${req.params.lName}"`
+
+app.get('/students_courses/fName/:fname', async (req, res) => {
+        let sql = `SELECT students.fName, courses.name FROM students_courses INNER JOIN students ON students_courses.student_id = students.id INNER JOIN courses ON students_courses.course_id = courses.id WHERE students.fName="${req.params.fname}"`
         const dbData = await db.query(sql);
         res.json(dbData);
     });
@@ -304,11 +297,19 @@ app.get('/students_courses/id/:id', async (req, res) => {
         const dbData = await db.query(sql);
         res.json(dbData);
     });
-app.get('/students_courses/town/:town', async (req, res) => {
-        let sql = `SELECT students.town, courses.name FROM students_courses INNER JOIN students ON students_courses.student_id = students.id INNER JOIN courses ON students_courses.course_id = courses.id WHERE students.town="${req.params.town}"` 
+
+app.get('/students_courses/lName/:lName', async (req, res) => {
+        let sql = `SELECT students.lName, courses.name FROM students_courses INNER JOIN students ON students_courses.student_id = students.id INNER JOIN courses ON students_courses.course_id = courses.id WHERE students.lName="${req.params.lName}"`
         const dbData = await db.query(sql);
         res.json(dbData);
     });
+
+app.get('/students_courses/town/:town', async (req, res) => {
+           let sql =`SELECT students.town, students.fName, courses.name FROM students_courses INNER JOIN students ON students_courses.student_id = students.id INNER JOIN courses ON students_courses.course_id = courses.id WHERE students.town = "${req.params.town}"`
+        const dbData = await db.query(sql);
+        res.json(dbData);
+    });
+
 app.get('/students_courses/courseId/:courseIdid', async (req, res) => {
         let sql = `SELECT students_courses.course_id, students.fName FROM students_courses INNER JOIN students ON students_courses.student_id = students.id WHERE students_courses.course_id=${req.params.courseIdid}` 
         const dbData = await db.query(sql);
@@ -321,13 +322,13 @@ app.get('/students_courses/courseName/:courseName', async (req, res) => {
         res.json(dbData);
     });
 
-app.get('/students_courses/courseWord/:courseWord', async (req, res) => {
-        let sql = `SELECT  courses.name, students.lName FROM students_courses INNER JOIN students ON students_courses.student_id = students.id INNER JOIN courses ON students_courses.course_id = courses.id WHERE courses.name LIKE "%${req.params.courseWord}%"`
+app.get('/courses/courseWord/:courseWord', async (req, res) => {
+        let sql = `SELECT  * FROM courses WHERE courses.name LIKE "%${req.params.courseWord}%"`
         const dbData = await db.query(sql);
         res.json(dbData);
     });
-app.get('/students_courses/courseDescription/:courseDescriptionWord', async (req, res) => {
-        let sql = `SELECT  students.fName, courses.name, courses.description FROM students_courses INNER JOIN students ON students_courses.student_id = students.id INNER JOIN courses ON students_courses.course_id = courses.id WHERE courses.description LIKE "%${req.params.courseDescriptionWord}%"`
+app.get('/courses/courseDescription/:courseDescriptionWord', async (req, res) => {
+        let sql = `SELECT * FROM courses WHERE courses.description LIKE "%${req.params.courseDescriptionWord}%"`
         const dbData = await db.query(sql);
         res.json(dbData);
     });
