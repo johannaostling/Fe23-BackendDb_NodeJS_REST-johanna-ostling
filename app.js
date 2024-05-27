@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Use body-parser middleware to send JSON data
 app.use(bodyParser.json());
 
-////////////////Routing
+////////////////Routing/////////////////
 
 app.get('/', async (req, res) => {
     const pageTitle = "Dynamic webpage";
@@ -142,9 +142,9 @@ app.post('/coursesAdd', async (req, res) => {
     console.log(req.body);
     const requestData = req.body;
     const pageTitle = "Dynamic webpage";
-    const values = [requestData.name,requestData.desciption]
+    const values = [requestData.name,requestData.description]
     //execute delete query on a table.row
-    const sqlINSERTINTOQuery = `INSERT INTO courses (name, desciption) VALUES (?,?,?)`;
+    const sqlINSERTINTOQuery = `INSERT INTO courses (name, description) VALUES (?,?)`;
     const INSERTINTOQuery = await db.query(sqlINSERTINTOQuery,values);
 
     //get table data
@@ -160,10 +160,10 @@ app.post('/coursesUpdate', async (req, res) => {
     console.log(req.body);
     const requestData = req.body;
     const pageTitle = "Dynamic webpage";
-    const values = [requestData.name2,requestData.desciption2, requestData.id3]
+    const values = [requestData.name2,requestData.description2, requestData.id3]
     //execute delete query on a table.row
     console.log(values)
-    const sqlINSERTINTOQuery = `UPDATE courses SET name=?, desciption=? WHERE id=?`;
+    const sqlINSERTINTOQuery = `UPDATE courses SET name=?, description=? WHERE id=?`;
     const INSERTINTOQuery = await db.query(sqlINSERTINTOQuery,values);
     // UPDATE användare SET ålder = 31 WHERE namn = 'Anna';
     
@@ -243,7 +243,7 @@ app.post('/students_coursesUpdate', async (req, res) => {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-app.get('/courses', async (req, res) => {
+app.get('/courses/list', async (req, res) => {
     let sql = "";
     const {id} = req.query;
     console.log(id);
@@ -257,7 +257,7 @@ app.get('/courses', async (req, res) => {
     res.json(dbData);
 });
 
-app.get('/students', async (req, res) => {
+app.get('/students/list', async (req, res) => {
     let sql = "";
     const {id} = req.query;
     console.log(id);
@@ -272,7 +272,7 @@ app.get('/students', async (req, res) => {
 });
 
 
-app.get('/students_courses', async (req, res) => {
+app.get('/students_courses/list', async (req, res) => {
     let sql = "";
     const {id} = req.query;
     console.log(id);
@@ -327,7 +327,7 @@ app.get('/students_courses/courseWord/:courseWord', async (req, res) => {
         res.json(dbData);
     });
 app.get('/students_courses/courseDescription/:courseDescriptionWord', async (req, res) => {
-        let sql = `SELECT  students.fName, courses.name, courses.desciption FROM students_courses INNER JOIN students ON students_courses.student_id = students.id INNER JOIN courses ON students_courses.course_id = courses.id WHERE courses.desciption LIKE "%${req.params.courseDescriptionWord}%"`
+        let sql = `SELECT  students.fName, courses.name, courses.description FROM students_courses INNER JOIN students ON students_courses.student_id = students.id INNER JOIN courses ON students_courses.course_id = courses.id WHERE courses.description LIKE "%${req.params.courseDescriptionWord}%"`
         const dbData = await db.query(sql);
         res.json(dbData);
     });
