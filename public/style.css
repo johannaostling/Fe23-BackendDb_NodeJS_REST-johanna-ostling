@@ -2,9 +2,3 @@ body {
     background-color: rgb(163, 163, 228);
 }
 
-.hidden{
-    visibility: hidden;
-}
-.showing{
-    visibility: visible;
-}

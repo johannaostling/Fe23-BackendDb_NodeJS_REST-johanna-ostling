@@ -48,14 +48,12 @@ app.post('/', async (req, res) => {
 });
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 ///////////////////////// Students CRUD ///////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get('/students', async (req, res) => {
     const pageTitle = "Dynamic webpage";
     const sql = `SELECT * FROM students`;
     const dbData = await db.query(sql);
-    console.log(dbData);
     res.render('students', {pageTitle, dbData} );
     
 });
@@ -79,7 +77,6 @@ app.post('/students', async (req, res) => {
 
 app.post('/studentsAdd', async (req, res) => {
     //getting input data from the form
-    console.log(req.body);
     const requestData = req.body;
     const pageTitle = "Dynamic webpage";
     const values = [requestData.fName, requestData.lName, requestData.town]
@@ -94,9 +91,28 @@ app.post('/studentsAdd', async (req, res) => {
     //show webpage to the user
     res.render('students', {pageTitle, dbData} );
 });
-///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+app.post('/studentsUpdate', async (req, res) => {
+    //getting input data from the form
+    console.log(req.body);
+    const requestData = req.body;
+    const pageTitle = "Dynamic webpage";
+    const values = [requestData.fName2,requestData.lName2, requestData.town2, requestData.id2]
+    
+    //execute delete query on a table.row
+    console.log(values)
+    const sqlINSERTINTOQuery = `UPDATE students SET fName=?, lName=?, town=? WHERE id=?`;
+    const INSERTINTOQuery = await db.query(sqlINSERTINTOQuery,values);
+    
+    //get table data
+    const sql = `SELECT * FROM students`;
+    const dbData = await db.query(sql);
+
+    //show webpage to the user
+    res.render('students', {pageTitle, dbData} );
+});
+
 ///////////////////////// courses CRUD ///////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get('/courses', async (req, res) => {
     const pageTitle = "Dynamic webpage";
     const sql = `SELECT * FROM courses`;
@@ -120,6 +136,7 @@ app.post('/courses', async (req, res) => {
     //show webpage to the user
     res.render('courses', {pageTitle, dbData} );
 });
+
 app.post('/coursesAdd', async (req, res) => {
     //getting input data from the form
     console.log(req.body);
@@ -138,10 +155,27 @@ app.post('/coursesAdd', async (req, res) => {
     res.render('courses', {pageTitle, dbData} );
 });
 
+app.post('/coursesUpdate', async (req, res) => {
+    //getting input data from the form
+    console.log(req.body);
+    const requestData = req.body;
+    const pageTitle = "Dynamic webpage";
+    const values = [requestData.name2,requestData.desciption2, requestData.id3]
+    //execute delete query on a table.row
+    console.log(values)
+    const sqlINSERTINTOQuery = `UPDATE courses SET name=?, desciption=? WHERE id=?`;
+    const INSERTINTOQuery = await db.query(sqlINSERTINTOQuery,values);
+    // UPDATE användare SET ålder = 31 WHERE namn = 'Anna';
+    
+    //get table data
+    const sql = `SELECT * FROM courses`;
+    const dbData = await db.query(sql);
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //show webpage to the user
+    res.render('courses', {pageTitle, dbData} );
+});
+
 ///////////////////////// students_courses CRUD //////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get('/students_courses', async (req, res) => {
     const pageTitle = "Dynamic webpage";
     const sql = `SELECT * FROM students_courses`;
@@ -185,7 +219,25 @@ app.post('/students_coursesAdd', async (req, res) => {
     res.render('students_courses', {pageTitle, dbData} );
 });
 
+app.post('/students_coursesUpdate', async (req, res) => {
+    //getting input data from the form
+    console.log(req.body);
+    const requestData = req.body;
+    const pageTitle = "Dynamic webpage";
+    const values = [requestData.student_id2,requestData.course_id2, requestData.id2]
+    
+    //execute delete query on a table.row
+    console.log(values)
+    const sqlINSERTINTOQuery = `UPDATE students_courses SET fName=?, lName=?, town=? WHERE id=?`;
+    const INSERTINTOQuery = await db.query(sqlINSERTINTOQuery,values);
+    
+    //get table data
+    const sql = `SELECT * FROM students_courses`;
+    const dbData = await db.query(sql);
 
+    //show webpage to the user
+    res.render('students_courses', {pageTitle, dbData} );
+});
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////// return Json table data/////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -6,8 +6,8 @@
     <p> <%= pageTitle; %></p>
 
     <form action="/students" method="POST">
-        Row id to be removed: <input type="text" name="id" >
-        <button type="submit">Remove row</button>
+        <input type="text" name="id"  placeholder="id">
+        <button type="submit">Remove</button>
     </form>
     <form action="/studentsAdd" method="POST">
         <input type="text" name="fName" placeholder="first name">
@@ -17,10 +17,10 @@
     </form>
     <form action="/studentsUpdate" method="POST">
         <input type="text" name="id2" placeholder="id">
-        <input type="text" name="fName" placeholder="first name">
-        <input type="text" name="lName" placeholder="last name">
-        <input type="text" name="town" placeholder="town">
-        <button type="submit">Sumbit</button>
+        <input type="text" name="fName2" placeholder="first name">
+        <input type="text" name="lName2" placeholder="last name">
+        <input type="text" name="town2" placeholder="town">
+        <button type="submit">Update</button>
     </form>
     <%- include('partials/dataTable') %>
     
