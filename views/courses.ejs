@@ -10,12 +10,16 @@
         <button type="submit">Remove row</button>
     </form>
     <form action="/coursesAdd" method="POST">
-        <input type="text" name="id2" placeholder=" id">
         <input type="text" name="name" placeholder="name">
         <input type="text" name="desciption" placeholder="desciption">
         <button type="submit">Sumbit</button>
     </form>
-
+    <form action="/coursesUpdate" method="POST">
+        <input type="text" name="id2" placeholder="Id">
+        <input type="text" name="name" placeholder="name">
+        <input type="text" name="desciption" placeholder="desciption">
+        <button type="submit">Sumbit</button>
+    </form>
     <%- include('partials/dataTable') %>
     
     <%- include('partials/footer') %>

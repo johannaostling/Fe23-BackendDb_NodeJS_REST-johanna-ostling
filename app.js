@@ -125,9 +125,9 @@ app.post('/coursesAdd', async (req, res) => {
     console.log(req.body);
     const requestData = req.body;
     const pageTitle = "Dynamic webpage";
-    const values = [requestData.id2,requestData.name,requestData.desciption]
+    const values = [requestData.name,requestData.desciption]
     //execute delete query on a table.row
-    const sqlINSERTINTOQuery = `INSERT INTO courses (id, name, desciption) VALUES (?,?,?)`;
+    const sqlINSERTINTOQuery = `INSERT INTO courses (name, desciption) VALUES (?,?,?)`;
     const INSERTINTOQuery = await db.query(sqlINSERTINTOQuery,values);
 
     //get table data
