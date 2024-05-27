@@ -1,11 +1,9 @@
 <%- include('partials/head') %>
 <body>
     <%- include('partials/header') %>
-    
 
-    <p> <%= pageTitle; %></p>
 
-    <form action="/courses" method="POST">
+    <form action="/courses" method="POST" class="deleteForm">
         <input type="text" name="id"  placeholder="id">
         <button type="submit">Remove</button>
     </form>

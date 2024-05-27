@@ -2,3 +2,41 @@ body {
     background-color: rgb(163, 163, 228);
 }
 
+#nav{
+    background-color: rgb(163, 228, 165);
+    border-radius: 7px;
+    padding-bottom: 15px;
+    
+}
+h1{
+    padding-top: 15px;
+    display: flex;
+    justify-content: center;
+    font-size: 50px;
+}
+
+#footerDiv{
+    height: 100px;
+    background-color: rgb(163, 228, 165);
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+p{
+    padding-top: 15px;
+    font-size: 20px;
+    font-family: cursive;
+
+}
+form{
+    padding-top: 5px;
+    display: flex;
+    justify-content: center;
+}
+table{
+    background-color: rgb(163, 228, 165);
+}
