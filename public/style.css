@@ -6,6 +6,7 @@ body {
     background-color: rgb(163, 228, 165);
     border-radius: 7px;
     padding-bottom: 15px;
+    font-size: 20px;
     
 }
 h1{
@@ -16,7 +17,7 @@ h1{
 }
 
 #footerDiv{
-    height: 100px;
+    height: 70px;
     background-color: rgb(163, 228, 165);
     position: fixed;
     bottom: 0;
